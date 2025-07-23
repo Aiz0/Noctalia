@@ -33,7 +33,7 @@ PanelWithOverlay {
         visible: parent.visible
         color: "transparent"
         anchors.top: parent.top
-        anchors.right: parent.right
+        anchors.right: parent.left
 
         // Animation properties
         property real slideOffset: width
@@ -43,8 +43,8 @@ PanelWithOverlay {
             if (!sidebarPopup.visible) {
                 sidebarPopup.visible = true;
                 forceActiveFocus();
-                slideAnim.from = width;
-                slideAnim.to = 0;
+                slideAnim.from = 0;
+                slideAnim.to = width;
                 slideAnim.running = true;
                 if (weather)
                     weather.startWeatherFetch();
@@ -62,15 +62,15 @@ PanelWithOverlay {
             if (sidebarPopupRect.wallpaperPanelModal && sidebarPopupRect.wallpaperPanelModal.visible) {
                 sidebarPopupRect.wallpaperPanelModal.visible = false;
             }
-                if (sidebarPopupRect.wifiPanelModal && sidebarPopupRect.wifiPanelModal.visible) {
-                    sidebarPopupRect.wifiPanelModal.visible = false;
-                }
-                if (sidebarPopupRect.bluetoothPanelModal && sidebarPopupRect.bluetoothPanelModal.visible) {
-                    sidebarPopupRect.bluetoothPanelModal.visible = false;
-                }
+            if (sidebarPopupRect.wifiPanelModal && sidebarPopupRect.wifiPanelModal.visible) {
+                sidebarPopupRect.wifiPanelModal.visible = false;
+            }
+            if (sidebarPopupRect.bluetoothPanelModal && sidebarPopupRect.bluetoothPanelModal.visible) {
+                sidebarPopupRect.bluetoothPanelModal.visible = false;
+            }
             if (sidebarPopup.visible) {
-                slideAnim.from = 0;
-                slideAnim.to = width;
+                slideAnim.from = width;
+                slideAnim.to = 0;
                 slideAnim.running = true;
             }
         }
@@ -83,7 +83,7 @@ PanelWithOverlay {
             easing.type: Easing.OutCubic
 
             onStopped: {
-                if (sidebarPopupRect.slideOffset === sidebarPopupRect.width) {
+                if (sidebarPopupRect.slideOffset === 0) {
                     sidebarPopup.visible = false;
                     // Stop monitoring and background tasks when hidden
                     if (weather)
@@ -109,10 +109,10 @@ PanelWithOverlay {
             width: sidebarPopupRect.width - sidebarPopupRect.leftPadding
             height: sidebarPopupRect.height - sidebarPopupRect.bottomPadding
             anchors.top: sidebarPopupRect.top
-            x: sidebarPopupRect.leftPadding + sidebarPopupRect.slideOffset
+            x: sidebarPopupRect.slideOffset
             y: 0
             color: Theme.backgroundPrimary
-            bottomLeftRadius: 20
+            bottomRightRadius: 20
             z: 0
 
             Behavior on x {
@@ -367,11 +367,11 @@ PanelWithOverlay {
 
         Corners {
             id: sidebarCornerLeft
-            position: "bottomright"
+            position: "bottomleft"
             size: 1.1
             fillColor: Theme.backgroundPrimary
             anchors.top: mainRectangle.top
-            offsetX: -447 + sidebarPopupRect.slideOffset
+            offsetX: sidebarPopupRect.slideOffset + mainRectangle.width - 33
             offsetY: 0
 
             Behavior on offsetX {
@@ -385,10 +385,10 @@ PanelWithOverlay {
 
         Corners {
             id: sidebarCornerBottom
-            position: "bottomright"
+            position: "bottomleft"
             size: 1.1
             fillColor: Theme.backgroundPrimary
-            offsetX: 33 + sidebarPopupRect.slideOffset
+            offsetX: sidebarPopupRect.slideOffset - 33
             offsetY: 46
 
             Behavior on offsetX {

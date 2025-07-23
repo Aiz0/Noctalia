@@ -1,4 +1,4 @@
-import QtQuick 
+import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
@@ -15,8 +15,8 @@ PanelWindow {
     visible: false
     color: "transparent"
     anchors.top: true
-    anchors.right: true
-    margins.right: 0
+    anchors.left: true
+    margins.left: 0
     margins.top: 0
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 
@@ -25,15 +25,15 @@ PanelWindow {
     Connections {
         target: WallpaperManager
         function onWallpaperListChanged() {
-            wallpapers = WallpaperManager.wallpaperList
+            wallpapers = WallpaperManager.wallpaperList;
         }
     }
 
     onVisibleChanged: {
         if (wallpaperPanelModal.visible) {
-            wallpapers = WallpaperManager.wallpaperList
+            wallpapers = WallpaperManager.wallpaperList;
         } else {
-            wallpapers = []
+            wallpapers = [];
         }
     }
 

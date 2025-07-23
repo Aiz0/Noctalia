@@ -163,10 +163,10 @@ Rectangle {
             visible: true
             z: 9999
             anchors.top: parent.top
-            anchors.right: parent.right
+            anchors.left: parent.left
 
             // Position below system button
-            anchors.rightMargin: 32
+            anchors.leftMargin: systemWidget.width - 32
             anchors.topMargin: systemButton.y + systemButton.height + 48
 
             ColumnLayout {

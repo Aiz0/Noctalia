@@ -10,7 +10,9 @@ PanelWithOverlay {
     id: notificationHistoryWin
     property string historyFilePath: Settings.settingsDir + "notification_history.json"
     property bool hasUnread: notificationHistoryWinRect.hasUnread && !notificationHistoryWinRect.visible
-    function addToHistory(notification) { notificationHistoryWinRect.addToHistory(notification) }
+    function addToHistory(notification) {
+        notificationHistoryWinRect.addToHistory(notification);
+    }
     Rectangle {
         id: notificationHistoryWinRect
         implicitWidth: 400
@@ -20,9 +22,9 @@ PanelWithOverlay {
         implicitHeight: Math.max(Math.min(contentHeight, maxPopupHeight), minPopupHeight)
         visible: parent.visible
         anchors.top: parent.top
-        anchors.right: parent.right
+        anchors.left: parent.left
         anchors.topMargin: 4
-        anchors.rightMargin: 4
+        anchors.leftMargin: 4
         color: Theme.backgroundPrimary
         radius: 20
 

@@ -17,10 +17,10 @@ PanelWithOverlay {
         border.width: 1
         width: 340
         height: 380
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.topMargin: 4
-        anchors.rightMargin: 4
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.bottomMargin: 4
+        anchors.leftMargin: 4
 
         ColumnLayout {
             anchors.fill: parent
@@ -92,7 +92,7 @@ PanelWithOverlay {
 
                 // Fetch holidays when calendar is opened or month/year changes
                 function updateHolidays() {
-                    Holidays.getHolidaysForMonth(calendar.year, calendar.month, function(holidays) {
+                    Holidays.getHolidaysForMonth(calendar.year, calendar.month, function (holidays) {
                         calendar.holidays = holidays;
                     });
                 }
@@ -115,7 +115,7 @@ PanelWithOverlay {
                     width: 32
                     height: 32
                     radius: 8
-                    property var holidayInfo: calendar.holidays.filter(function(h) {
+                    property var holidayInfo: calendar.holidays.filter(function (h) {
                         var d = new Date(h.date);
                         return d.getDate() === model.day && d.getMonth() === model.month && d.getFullYear() === model.year;
                     })
@@ -131,7 +131,8 @@ PanelWithOverlay {
                     // Holiday dot indicator
                     Rectangle {
                         visible: isHoliday
-                        width: 4; height: 4
+                        width: 4
+                        height: 4
                         radius: 4
                         color: Theme.accentTertiary
                         anchors.top: parent.top
@@ -157,7 +158,7 @@ PanelWithOverlay {
                         hoverEnabled: true
                         onEntered: {
                             if (isHoliday) {
-                                holidayTooltip.text = holidayInfo.map(function(h) {
+                                holidayTooltip.text = holidayInfo.map(function (h) {
                                     return h.localName + (h.name !== h.localName ? " (" + h.name + ")" : "") + (h.global ? " [Global]" : "");
                                 }).join(", ");
                                 holidayTooltip.targetItem = parent;

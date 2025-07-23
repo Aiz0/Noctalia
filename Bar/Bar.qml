@@ -33,41 +33,56 @@ Scope {
                     id: panel
                     screen: modelData
                     color: "transparent"
-                    implicitHeight: barBackground.height
+                    implicitWidth: barBackground.width
+                    // had to set this otherwise it would take up more space
+                    exclusiveZone: barBackground.width
+
                     anchors.top: true
+                    anchors.bottom: true
                     anchors.left: true
-                    anchors.right: true
 
                     visible: true
 
                     Rectangle {
                         id: barBackground
-                        width: parent.width
-                        height: 36
+                        width: 36
+                        height: parent.height
                         color: Theme.backgroundPrimary
                         anchors.top: parent.top
                         anchors.left: parent.left
                     }
 
-                    Row {
+                    Column {
                         id: leftWidgetsRow
-                        anchors.verticalCenter: barBackground.verticalCenter
-                        anchors.left: barBackground.left
-                        anchors.leftMargin: 18
+                        anchors.horizontalCenter: barBackground.horizontalCenter
+                        anchors.top: barBackground.top
+                        anchors.topMargin: 18
                         spacing: 12
 
+                        PanelPopup {
+                            id: sidebarPopup
+                        }
+
+                        Button {
+                            barBackground: barBackground
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            screen: modelData
+                            sidebarPopup: sidebarPopup
+                        }
+
                         SystemInfo {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         Media {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
 
-                    ActiveWindow {
-                        screen: modelData
-                    }
+                    // Disable Active Window
+                    // ActiveWindow {
+                    //     screen: modelData
+                    // }
 
                     Workspace {
                         id: workspace
@@ -76,37 +91,37 @@ Scope {
                         anchors.verticalCenter: barBackground.verticalCenter
                     }
 
-                    Row {
+                    Column {
                         id: rightWidgetsRow
-                        anchors.verticalCenter: barBackground.verticalCenter
-                        anchors.right: barBackground.right
-                        anchors.rightMargin: 18
+                        anchors.horizontalCenter: barBackground.horizontalCenter
+                        anchors.bottom: barBackground.bottom
+                        anchors.bottomMargin: 18
                         spacing: 12
 
                         NotificationIcon {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         Battery {
                             id: widgetsBattery
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         Brightness {
                             id: widgetsBrightness
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         Volume {
                             id: widgetsVolume
                             shell: rootScope.shell
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         SystemTray {
                             id: systemTrayModule
                             shell: rootScope.shell
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                             bar: panel
                             trayMenu: externalTrayMenu
                         }
@@ -117,18 +132,7 @@ Scope {
 
                         ClockWidget {
                             screen: modelData
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-
-                        PanelPopup {
-                            id: sidebarPopup
-                        }
-
-                        Button {
-                            barBackground: barBackground
-                            anchors.verticalCenter: parent.verticalCenter
-                            screen: modelData
-                            sidebarPopup: sidebarPopup
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
 
@@ -143,12 +147,12 @@ Scope {
 
                     color: "transparent"
                     screen: modelData
-                    margins.top: 36
+                    margins.left: 36
                     WlrLayershell.exclusionMode: ExclusionMode.Ignore
                     visible: true
-                    WlrLayershell.layer: WlrLayer.Background
-                    aboveWindows: false
-                    WlrLayershell.namespace: "swww-daemon"
+                    // WlrLayershell.layer: WlrLayer.Background
+                    // aboveWindows: false
+                    // WlrLayershell.namespace: "swww-daemon"
                     implicitHeight: 24
 
                     Corners {
@@ -168,12 +172,12 @@ Scope {
                     anchors.right: true
                     color: "transparent"
                     screen: modelData
-                    margins.top: 36
+
                     WlrLayershell.exclusionMode: ExclusionMode.Ignore
                     visible: true
-                    WlrLayershell.layer: WlrLayer.Background
-                    aboveWindows: false
-                    WlrLayershell.namespace: "swww-daemon"
+                    // WlrLayershell.layer: WlrLayer.Background
+                    // aboveWindows: false
+                    // WlrLayershell.namespace: "swww-daemon"
 
                     implicitHeight: 24
 
@@ -194,11 +198,12 @@ Scope {
                     anchors.left: true
                     color: "transparent"
                     screen: modelData
+                    margins.left: 36
                     WlrLayershell.exclusionMode: ExclusionMode.Ignore
                     visible: true
-                    WlrLayershell.layer: WlrLayer.Background
-                    aboveWindows: false
-                    WlrLayershell.namespace: "swww-daemon"
+                    // WlrLayershell.layer: WlrLayer.Background
+                    // aboveWindows: false
+                    // WlrLayershell.namespace: "swww-daemon"
 
                     implicitHeight: 24
 
@@ -221,9 +226,9 @@ Scope {
                     screen: modelData
                     WlrLayershell.exclusionMode: ExclusionMode.Ignore
                     visible: true
-                    WlrLayershell.layer: WlrLayer.Background
-                    aboveWindows: false
-                    WlrLayershell.namespace: "swww-daemon"
+                    // WlrLayershell.layer: WlrLayer.Background
+                    // aboveWindows: false
+                    // WlrLayershell.namespace: "swww-daemon"
 
                     implicitHeight: 24
 

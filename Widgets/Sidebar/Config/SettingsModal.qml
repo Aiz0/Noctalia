@@ -1,4 +1,4 @@
-import QtQuick 
+import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
@@ -14,8 +14,8 @@ PanelWindow {
     visible: false
     color: "transparent"
     anchors.top: true
-    anchors.right: true
-    margins.right: 0
+    anchors.left: true
+    margins.left: 0
     margins.top: 0
     //z: 100
     //border.color: Theme.outline
@@ -36,7 +36,7 @@ PanelWindow {
             anchors.leftMargin: 32
             anchors.rightMargin: 32
             anchors.topMargin: 32
-            
+
             spacing: 24
 
             // Header
@@ -95,9 +95,18 @@ PanelWindow {
                 id: settingsTabs
                 Layout.fillWidth: true
                 tabsModel: [
-                    { icon: "cloud", label: "Weather" },
-                    { icon: "settings", label: "System" },
-                    { icon: "wallpaper", label: "Wallpaper" }
+                    {
+                        icon: "cloud",
+                        label: "Weather"
+                    },
+                    {
+                        icon: "settings",
+                        label: "System"
+                    },
+                    {
+                        icon: "wallpaper",
+                        label: "Wallpaper"
+                    }
                 ]
             }
 
@@ -163,7 +172,7 @@ PanelWindow {
     }
 
     // Function to open the modal and initialize temp values
-    function openSettings() {        
+    function openSettings() {
         visible = true;
         // Force focus on the text input after a short delay
         focusTimer.start();
@@ -192,4 +201,3 @@ PanelWindow {
         {}
     }
 }
-

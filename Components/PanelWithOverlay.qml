@@ -6,9 +6,9 @@ import qs.Settings
 PanelWindow {
     id: outerPanel
     property bool showOverlay: Settings.settings.dimPanels
-    property int topMargin: 36
+    property int leftMargin: 36
     property color overlayColor: showOverlay ? Theme.overlay : "transparent"
-    
+
     function dismiss() {
         visible = false;
     }
@@ -27,7 +27,7 @@ PanelWindow {
     anchors.left: true
     anchors.right: true
     anchors.bottom: true
-    margins.top: topMargin
+    margins.left: leftMargin
 
     MouseArea {
         anchors.fill: parent

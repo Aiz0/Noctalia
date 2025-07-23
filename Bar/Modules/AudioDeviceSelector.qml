@@ -7,7 +7,7 @@ import qs.Settings
 
 PanelWithOverlay {
     id: ioSelector
-    signal panelClosed()
+    signal panelClosed
     property int tabIndex: 0
     property Item anchorItem: null
 
@@ -22,10 +22,10 @@ PanelWithOverlay {
         radius: 20
         width: 340
         height: 340
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.topMargin: 4
-        anchors.rightMargin: 4
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.bottomMargin: 4
+        anchors.leftMargin: 4
 
         ColumnLayout {
             anchors.fill: parent
@@ -37,12 +37,18 @@ PanelWithOverlay {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter
                 spacing: 0
-                
+
                 Tabs {
                     id: ioTabs
                     tabsModel: [
-                        { label: "Output", icon: "volume_up" },
-                        { label: "Input", icon: "mic" }
+                        {
+                            label: "Output",
+                            icon: "volume_up"
+                        },
+                        {
+                            label: "Input",
+                            icon: "mic"
+                        }
                     ]
                     currentIndex: tabIndex
                     onTabChanged: {
@@ -52,7 +58,10 @@ PanelWithOverlay {
             }
 
             // Add vertical space between tabs and entries
-            Item { height: 36; Layout.fillWidth: true }
+            Item {
+                height: 36
+                Layout.fillWidth: true
+            }
 
             // Output Devices
             Flickable {
@@ -103,10 +112,13 @@ PanelWithOverlay {
                                         elide: Text.ElideRight
                                     }
                                 }
-                                Item { Layout.fillWidth: true }
+                                Item {
+                                    Layout.fillWidth: true
+                                }
                                 Rectangle {
                                     visible: Pipewire.preferredDefaultAudioSink !== modelData
-                                    width: 60; height: 20
+                                    width: 60
+                                    height: 20
                                     radius: 4
                                     color: Theme.accentPrimary
                                     border.color: Theme.accentPrimary
@@ -187,10 +199,13 @@ PanelWithOverlay {
                                         elide: Text.ElideRight
                                     }
                                 }
-                                Item { Layout.fillWidth: true }
+                                Item {
+                                    Layout.fillWidth: true
+                                }
                                 Rectangle {
                                     visible: Pipewire.preferredDefaultAudioSource !== modelData
-                                    width: 60; height: 20
+                                    width: 60
+                                    height: 20
                                     radius: 4
                                     color: Theme.accentPrimary
                                     border.color: Theme.accentPrimary
@@ -225,26 +240,30 @@ PanelWithOverlay {
     }
 
     function sinkNodes() {
-        let nodes = Pipewire.nodes && Pipewire.nodes.values
-            ? Pipewire.nodes.values.filter(function(n) { return n.isSink && n.audio })
-            : [];
+        let nodes = Pipewire.nodes && Pipewire.nodes.values ? Pipewire.nodes.values.filter(function (n) {
+            return n.isSink && n.audio;
+        }) : [];
         if (Pipewire.defaultAudioSink) {
-            nodes = nodes.slice().sort(function(a, b) {
-                if (a.id === Pipewire.defaultAudioSink.id) return -1;
-                if (b.id === Pipewire.defaultAudioSink.id) return 1;
+            nodes = nodes.slice().sort(function (a, b) {
+                if (a.id === Pipewire.defaultAudioSink.id)
+                    return -1;
+                if (b.id === Pipewire.defaultAudioSink.id)
+                    return 1;
                 return 0;
             });
         }
         return nodes;
     }
     function sourceNodes() {
-        let nodes = Pipewire.nodes && Pipewire.nodes.values
-            ? Pipewire.nodes.values.filter(function(n) { return !n.isSink && n.audio })
-            : [];
+        let nodes = Pipewire.nodes && Pipewire.nodes.values ? Pipewire.nodes.values.filter(function (n) {
+            return !n.isSink && n.audio;
+        }) : [];
         if (Pipewire.defaultAudioSource) {
-            nodes = nodes.slice().sort(function(a, b) {
-                if (a.id === Pipewire.defaultAudioSource.id) return -1;
-                if (b.id === Pipewire.defaultAudioSource.id) return 1;
+            nodes = nodes.slice().sort(function (a, b) {
+                if (a.id === Pipewire.defaultAudioSource.id)
+                    return -1;
+                if (b.id === Pipewire.defaultAudioSource.id)
+                    return 1;
                 return 0;
             });
         }
@@ -274,9 +293,9 @@ PanelWithOverlay {
         }
     }
 
-    Component.onDestruction: {
-    }
+    Component.onDestruction: {}
     onVisibleChanged: {
-        if (!visible) panelClosed();
+        if (!visible)
+            panelClosed();
     }
 }

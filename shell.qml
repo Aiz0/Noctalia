@@ -14,7 +14,7 @@ import qs.Helpers
 Scope {
     id: root
 
-    property alias appLauncherPanel: appLauncherPanel
+    // property alias appLauncherPanel: appLauncherPanel
     property var notificationHistoryWin: notificationHistoryWin
 
     function updateVolume(vol) {
@@ -34,14 +34,14 @@ Scope {
         property var notificationHistoryWin: notificationHistoryWin
     }
 
-    Applauncher {
-        id: appLauncherPanel
-        visible: false
-    }
+    // Applauncher {
+    //     id: appLauncherPanel
+    //     visible: false
+    // }
 
-    LockScreen {
-        id: lockScreen
-    }
+    // LockScreen {
+    //     id: lockScreen
+    // }
 
     NotificationServer {
         id: notificationServer
@@ -78,10 +78,10 @@ Scope {
         objects: [Pipewire.defaultAudioSink]
     }
 
-    IPCHandlers {
-        appLauncherPanel: appLauncherPanel
-        lockScreen: lockScreen
-    }
+    // IPCHandlers {
+    //     appLauncherPanel: appLauncherPanel
+    //     lockScreen: lockScreen
+    // }vd
 
     Connections {
         function onReloadCompleted() {

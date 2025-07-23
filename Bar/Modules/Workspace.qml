@@ -21,10 +21,10 @@ Item {
     property bool effectsActive: false
     property color effectColor: Theme.accentPrimary
 
-    property int horizontalPadding: 16
+    property int verticalPadding: 16
     property int spacingBetweenPills: 8
 
-    width: {
+    height: {
         let total = 0;
         for (let i = 0; i < localWorkspaces.count; i++) {
             const ws = localWorkspaces.get(i);
@@ -36,11 +36,11 @@ Item {
                 total += 16;
         }
         total += Math.max(localWorkspaces.count - 1, 0) * spacingBetweenPills;
-        total += horizontalPadding * 2;
+        total += verticalPadding * 2;
         return total;
     }
 
-    height: 36
+    width: 36
 
     Component.onCompleted: {
         localWorkspaces.clear();
@@ -115,8 +115,8 @@ Item {
 
     Rectangle {
         id: workspaceBackground
-        width: parent.width - 15
-        height: 26
+        height: parent.height - 15
+        width: 26
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         radius: 12
@@ -134,19 +134,19 @@ Item {
         }
     }
 
-    Row {
+    Column {
         id: pillRow
         spacing: spacingBetweenPills
-        anchors.verticalCenter: workspaceBackground.verticalCenter
-        width: root.width - horizontalPadding * 2
-        x: horizontalPadding
+        anchors.horizontalCenter: workspaceBackground.horizontalCenter
+        height: root.height - verticalPadding * 2
+        y: verticalPadding
         Repeater {
             id: workspaceRepeater
             model: localWorkspaces
             Item {
                 id: workspacePillContainer
-                height: 12
-                width: {
+                width: 12
+                height: {
                     if (model.isFocused)
                         return 44;
                     else if (model.isActive)
@@ -244,7 +244,7 @@ Item {
                     anchors.centerIn: workspacePillContainer
                     width: workspacePillContainer.width + 18 * root.masterProgress
                     height: workspacePillContainer.height + 18 * root.masterProgress
-                    radius: width / 2
+                    radius: height / 2
                     color: "transparent"
                     border.color: root.effectColor
                     border.width: 2 + 6 * (1.0 - root.masterProgress)

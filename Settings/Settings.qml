@@ -57,6 +57,7 @@ Singleton {
             property bool reverseDayMonth: false
             property bool use12HourClock: false
             property bool dimPanels: true
+            property var pinnedExecs: [] // Added for AppLauncher pinned apps
         }
     }
 

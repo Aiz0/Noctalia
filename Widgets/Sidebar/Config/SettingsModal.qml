@@ -17,17 +17,12 @@ PanelWindow {
     anchors.left: true
     margins.left: 0
     margins.top: 0
-    //z: 100
-    //border.color: Theme.outline
-    //border.width: 1
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 
     Rectangle {
         anchors.fill: parent
         color: Theme.backgroundPrimary
         radius: 24
-        //border.color: Theme.outline
-        //border.width: 1
         z: 0
 
         ColumnLayout {
@@ -196,8 +191,11 @@ PanelWindow {
 
     // Release focus when modal becomes invisible
     onVisibleChanged: {
-        if (!visible)
-        // Focus will be handled by the individual components
-        {}
+        if (!visible) {
+            // Focus will be handled by the individual components
+            if (typeof weather !== 'undefined' && weather !== null && weather.fetchCityWeather) {
+                weather.fetchCityWeather();
+            }
+        }
     }
 }

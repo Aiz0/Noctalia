@@ -8,7 +8,7 @@ Singleton {
     id: root
 
     property var date: new Date()
-    property string time: Settings.settings.use12HourClock ? Qt.formatDateTime(date, "h:mm AP") : Qt.formatDateTime(date, "HH:mm")
+    property string time: Settings.settings.use12HourClock ? Qt.formatDateTime(date, "h\nmm\nAP") : Qt.formatDateTime(date, "HH\nmm")
     property string dateString: {
         let now = date;
         let dayName = now.toLocaleDateString(Qt.locale(), "ddd");

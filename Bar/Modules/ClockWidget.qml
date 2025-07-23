@@ -13,9 +13,9 @@ Rectangle {
     Text {
         id: textItem
         text: Time.time
-        font.family: Theme.fontFamily
+        font.family: Theme.fontMono
         font.weight: Font.Bold
-        font.pixelSize: Theme.fontSizeSmall
+        font.pixelSize: Theme.fontSizeLarge
         color: Theme.textPrimary
         anchors.centerIn: parent
     }
@@ -27,8 +27,8 @@ Rectangle {
         onEntered: showTooltip = true
         onExited: showTooltip = false
         cursorShape: Qt.PointingHandCursor
-        onClicked: function() {
-            calendar.visible = !calendar.visible
+        onClicked: function () {
+            calendar.visible = !calendar.visible;
         }
     }
 

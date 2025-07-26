@@ -77,8 +77,8 @@ Item {
         visible: false
         color: "transparent"
         anchors.top: true
-        anchors.right: true
-        margins.right: 0
+        anchors.left: true
+        margins.left: 0
         margins.top: 0
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 

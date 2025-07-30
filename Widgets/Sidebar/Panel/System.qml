@@ -155,7 +155,7 @@ Rectangle {
         Rectangle {
 
             width: 160
-            height: 180
+            height: 216
             color: Theme.surface
             radius: 8
             border.color: Theme.outline

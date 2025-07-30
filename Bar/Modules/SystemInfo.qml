@@ -24,8 +24,8 @@ Column {
 
         Text {
             id: cpuUsageText
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSizeSmall
+            font.family: Theme.fontFamilyMono
+            font.pixelSize: Theme.fontSizeCaption
             color: Theme.textPrimary
             text: Sysinfo.cpuUsageStr
             anchors.horizontalCenter: parent.horizontalCenter
@@ -47,8 +47,8 @@ Column {
         }
 
         Text {
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSizeSmall
+            font.family: Theme.fontFamilyMono
+            font.pixelSize: Theme.fontSizeCaption
             color: Theme.textPrimary
             text: Sysinfo.cpuTempStr
             anchors.horizontalCenter: parent.horizontalCenter
@@ -59,7 +59,7 @@ Column {
     // Memory Usage Component
     Column {
         id: memoryUsageLayout
-        spacing: 45
+        spacing: 6
         Text {
             font.family: "Material Symbols Outlined"
             font.pixelSize: Theme.fontSizeBody
@@ -70,8 +70,8 @@ Column {
         }
 
         Text {
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSizeSmall
+            font.family: Theme.fontFamilyMono
+            font.pixelSize: Theme.fontSizeCaption
             color: Theme.textPrimary
             text: Sysinfo.memoryUsageStr
             horizontalAlignment: Text.AlignHCenter

@@ -3,12 +3,12 @@ import Quickshell
 import qs.Settings
 import qs.Services
 
-Row {
+Column {
     id: layout
     spacing: 10
     visible: Settings.settings.showSystemInfoInBar
 
-    Row {
+    Column {
         id: cpuUsageLayout
         spacing: 6
 
@@ -18,7 +18,7 @@ Row {
             font.pixelSize: Theme.fontSizeBody
             text: "speed"
             verticalAlignment: Text.AlignVCenter
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             color: Theme.accentPrimary
         }
 
@@ -28,13 +28,13 @@ Row {
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.textPrimary
             text: Sysinfo.cpuUsageStr
-            anchors.verticalCenter: parent.verticalCenter
-            verticalAlignment: Text.AlignVCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 
     // CPU Temperature Component
-    Row {
+    Column {
         id: cpuTempLayout
         spacing: 3
         Text {
@@ -42,7 +42,7 @@ Row {
             font.pixelSize: Theme.fontSizeBody
             text: "thermometer"
             verticalAlignment: Text.AlignVCenter
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             color: Theme.accentPrimary
         }
 
@@ -51,22 +51,22 @@ Row {
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.textPrimary
             text: Sysinfo.cpuTempStr
-            anchors.verticalCenter: parent.verticalCenter
-            verticalAlignment: Text.AlignVCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 
     // Memory Usage Component
-    Row {
+    Column {
         id: memoryUsageLayout
-        spacing: 3
+        spacing: 45
         Text {
             font.family: "Material Symbols Outlined"
             font.pixelSize: Theme.fontSizeBody
             text: "memory"
             color: Theme.accentPrimary
-            verticalAlignment: Text.AlignVCenter
-            anchors.verticalCenter: parent.verticalCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
         Text {
@@ -74,8 +74,8 @@ Row {
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.textPrimary
             text: Sysinfo.memoryUsageStr
-            anchors.verticalCenter: parent.verticalCenter
-            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 }

@@ -38,7 +38,7 @@ Item {
         return icon || "";
     }
 
-    Row {
+    Column {
         id: runningAppsRow
         spacing: 8
         height: parent.height
@@ -61,11 +61,15 @@ Item {
                 property string appTitle: modelData ? modelData.title : ""
 
                 Behavior on color {
-                    ColorAnimation { duration: 150 }
+                    ColorAnimation {
+                        duration: 150
+                    }
                 }
 
                 Behavior on border.color {
-                    ColorAnimation { duration: 150 }
+                    ColorAnimation {
+                        duration: 150
+                    }
                 }
 
                 IconImage {
@@ -104,7 +108,7 @@ Item {
                         styledTooltip.tooltipVisible = false;
                     }
 
-                    onClicked: function(mouse) {
+                    onClicked: function (mouse) {
                         if (mouse.button === Qt.MiddleButton) {
                             if (modelData && modelData.close) {
                                 modelData.close();
@@ -119,9 +123,9 @@ Item {
                     }
 
                     onPressed: mouse => {
-                        if (mouse.button === Qt.RightButton) {
-                            // context menu logic (optional)
-                        }
+                        if (mouse.button === Qt.RightButton)
+                        // context menu logic (optional)
+                        {}
                     }
                 }
 

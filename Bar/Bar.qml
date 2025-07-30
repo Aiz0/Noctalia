@@ -79,7 +79,7 @@ Scope {
                         }
 
                         Taskbar {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
 

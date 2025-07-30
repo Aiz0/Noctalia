@@ -11,6 +11,9 @@ import qs.Widgets.Notification
 import qs.Settings
 import qs.Helpers
 
+import "./Helpers/IdleInhibitor.qml"
+import "./Helpers/IPCHandlers.qml"
+
 Scope {
     id: root
 
@@ -18,10 +21,17 @@ Scope {
     property var notificationHistoryWin: notificationHistoryWin
     property bool pendingReload: false
 
+    // Helper function to round value to nearest step
+    function roundToStep(value, step) {
+        return Math.round(value / step) * step;
+    }
+
     function updateVolume(vol) {
-        volume = vol;
+        var clamped = Math.max(0, Math.min(100, vol));
+        var stepped = roundToStep(clamped, 5);
+        volume = stepped;
         if (defaultAudioSink && defaultAudioSink.audio) {
-            defaultAudioSink.audio.volume = vol / 100;
+            defaultAudioSink.audio.volume = stepped / 100;
         }
     }
 
@@ -50,18 +60,25 @@ Scope {
     //     }
     // }
 
+    IdleInhibitor {
+        id: idleInhibitor
+    }
+
     NotificationServer {
         id: notificationServer
         onNotification: function (notification) {
             console.log("Notification received:", notification.appName);
             notification.tracked = true;
-            notificationPopup.addNotification(notification);
+            if (notificationPopup.notificationsVisible) {
+                notificationPopup.addNotification(notification);
+            }
             if (notificationHistoryWin) {
                 notificationHistoryWin.addToHistory({
                     id: notification.id,
                     appName: notification.appName || "Notification",
                     summary: notification.summary || "",
                     body: notification.body || "",
+                    urgency: notification.urgency,
                     timestamp: Date.now()
                 });
             }
@@ -73,7 +90,6 @@ Scope {
         barVisible: bar.visible
     }
 
-    // Notification History Window
     NotificationHistory {
         id: notificationHistoryWin
     }
@@ -85,10 +101,12 @@ Scope {
         objects: [Pipewire.defaultAudioSink]
     }
 
-    // IPCHandlers {
-    //     appLauncherPanel: appLauncherPanel
-    //     lockScreen: lockScreen
-    // }vd
+    IPCHandlers {
+        //appLauncherPanel: appLauncherPanel
+        //lockScreen: lockScreen
+        idleInhibitor: idleInhibitor
+        notificationPopup: notificationPopup
+    }
 
     Connections {
         function onReloadCompleted() {

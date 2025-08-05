@@ -29,9 +29,7 @@ Scope {
 
     // Volume property reflecting current audio volume in 0-100
     // Will be kept in sync dynamically below
-    property int volume: (defaultAudioSink && defaultAudioSink.audio && !defaultAudioSink.audio.muted)
-                        ? Math.round(defaultAudioSink.audio.volume * 100)
-                        : 0
+    property int volume: (defaultAudioSink && defaultAudioSink.audio && !defaultAudioSink.audio.muted) ? Math.round(defaultAudioSink.audio.volume * 100) : 0
 
     // Function to update volume with clamping, stepping, and applying to audio sink
     function updateVolume(vol) {
@@ -53,10 +51,6 @@ Scope {
         property var notificationHistoryWin: notificationHistoryWin
     }
 
-    Dock {
-        id: dock
-    }
-    
     IdleInhibitor {
         id: idleInhibitor
     }

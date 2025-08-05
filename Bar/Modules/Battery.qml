@@ -25,27 +25,42 @@ Item {
         if (!show)
             return "";
 
-        if (charging)
-            return "battery_android_bolt";
+        if (charging) {
+            // Hardcoded battery symbols
+            if (percent >= 95)
+                return "battery_charging_full";
+            if (percent >= 85)
+                return "battery_charging_90";
+            if (percent >= 75)
+                return "battery_charging_80";
+            if (percent >= 55)
+                return "battery_charging_60";
+            if (percent >= 45)
+                return "battery_charging_50";
+            if (percent >= 25)
+                return "battery_charging_30";
+            if (percent >= 0)
+                return "battery_charging_20";
+        }
 
         if (percent >= 95)
-           return "battery_android_full";
+            return "battery_full";
 
         // Hardcoded battery symbols
         if (percent >= 85)
-            return "battery_android_6";
+            return "battery_6_bar";
         if (percent >= 70)
-            return "battery_android_5";
+            return "battery_5_bar";
         if (percent >= 55)
-            return "battery_android_4";
+            return "battery_4_bar";
         if (percent >= 40)
-            return "battery_android_3";
+            return "battery_3_bar";
         if (percent >= 25)
-            return "battery_android_2";
+            return "battery_2_bar";
         if (percent >= 10)
-            return "battery_android_1";
+            return "battery_1_bar";
         if (percent >= 0)
-            return "battery_android_0";
+            return "battery_0_bar";
     }
 
     visible: testMode || (isReady && battery.isLaptopBattery)
@@ -93,18 +108,14 @@ Item {
                     const rate = batteryWidget.battery.changeRate;
                     if (rate > 0) {
                         lines.push(batteryWidget.charging ? "Charging rate: " + rate.toFixed(2) + " W" : "Discharging rate: " + rate.toFixed(2) + " W");
-                    }
-                    else if (rate < 0) {
+                    } else if (rate < 0) {
                         lines.push("Discharging rate: " + Math.abs(rate).toFixed(2) + " W");
-                    }
-                    else {
+                    } else {
                         lines.push("Estimating...");
                     }
-                }
-                else {
+                } else {
                     lines.push(batteryWidget.charging ? "Charging" : "Discharging");
                 }
-
 
                 if (batteryWidget.battery.healthPercentage !== undefined && batteryWidget.battery.healthPercentage > 0) {
                     lines.push("Health: " + Math.round(batteryWidget.battery.healthPercentage) + "%");

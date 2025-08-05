@@ -7,6 +7,7 @@ import QtCore
 import qs.Bar
 import qs.Bar.Modules
 import qs.Widgets
+import qs.Widgets.LockScreen
 import qs.Widgets.Notification
 import qs.Settings
 import qs.Helpers
@@ -52,21 +53,10 @@ Scope {
         property var notificationHistoryWin: notificationHistoryWin
     }
 
-    // Applauncher {
-    //     id: appLauncherPanel
-    //     visible: false
-    // }
-
-    // LockScreen {
-    //     id: lockScreen
-    //     onLockedChanged: {
-    //         if (!locked && root.pendingReload) {
-    //             reloadTimer.restart();
-    //             root.pendingReload = false;
-    //         }
-    //     }
-    // }
-
+    Dock {
+        id: dock
+    }
+    
     IdleInhibitor {
         id: idleInhibitor
     }
@@ -148,14 +138,14 @@ Scope {
     // --- NEW: Keep volume property in sync with actual Pipewire audio sink volume ---
 
     Connections {
-        target: defaultAudioSink.audio
-        onVolumeChanged: {
+        target: defaultAudioSink ? defaultAudioSink.audio : null
+        function onVolumeChanged() {
             if (defaultAudioSink.audio && !defaultAudioSink.audio.muted) {
                 volume = Math.round(defaultAudioSink.audio.volume * 100);
                 console.log("Volume changed externally to:", volume);
             }
         }
-        onMutedChanged: {
+        function onMutedChanged() {
             if (defaultAudioSink.audio) {
                 if (defaultAudioSink.audio.muted) {
                     volume = 0;

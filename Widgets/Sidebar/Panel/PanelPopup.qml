@@ -59,8 +59,8 @@ PanelWithOverlay {
             if (sidebarPopupRect.settingsModal && sidebarPopupRect.settingsModal.visible) {
                 sidebarPopupRect.settingsModal.visible = false;
             }
-            if (sidebarPopupRect.wallpaperPanelModal && sidebarPopupRect.wallpaperPanelModal.visible) {
-                sidebarPopupRect.wallpaperPanelModal.visible = false;
+            if (wallpaperPanel && wallpaperPanel.visible) {
+                wallpaperPanel.visible = false;
             }
             if (sidebarPopupRect.wifiPanelModal && sidebarPopupRect.wifiPanelModal.visible) {
                 sidebarPopupRect.wifiPanelModal.visible = false;
@@ -125,7 +125,6 @@ PanelWithOverlay {
         }
 
         property alias settingsModal: settingsModal
-        property alias wallpaperPanelModal: wallpaperPanelModal
         property alias wifiPanelModal: wifiPanel.panel
         property alias bluetoothPanelModal: bluetoothPanel.panel
         SettingsModal {
@@ -314,7 +313,7 @@ PanelWithOverlay {
                         settingsModal.visible = true;
                     }
                     onWallpaperRequested: {
-                        wallpaperPanelModal.visible = true;
+                        wallpaperPanel.visible =  true;
                     }
                 }
             }
@@ -403,15 +402,13 @@ PanelWithOverlay {
         }
 
         WallpaperPanel {
-            id: wallpaperPanelModal
-            visible: false
+            id: wallpaperPanel
             Component.onCompleted: {
                 if (parent) {
-                    wallpaperPanelModal.anchors.top = parent.top;
-                    wallpaperPanelModal.anchors.right = parent.right;
+                    anchors.top = parent.top;
+                    anchors.right = parent.right;
                 }
             }
-            // Add a close button inside WallpaperPanel.qml for user to close the modal
         }
     }
 }

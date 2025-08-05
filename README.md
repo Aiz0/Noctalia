@@ -12,6 +12,12 @@
   <a href="https://github.com/Ly-sec/Noctalia/graphs/contributors">
     <img src="https://img.shields.io/github/contributors/Ly-sec/Noctalia?style=for-the-badge&labelColor=0C0D11&color=A8AEFF" alt="GitHub contributors" />
   </a>
+  <a href="https://discord.gg/7JFFYWzWRn">
+    <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&labelColor=0C0D11&color=A8AEFF&logo=discord&logoColor=white" alt="Discord" />
+  </a>
+
+
+
 </p>
 
 A sleek, minimal, and thoughtfully crafted setup for Wayland using **Quickshell**. This setup includes a status bar, notification system, control panel, wifi & bluetooth support, power profiles, lockscreen, tray, workspaces, and more — all styled with a warm lavender palette.
@@ -214,6 +220,14 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 While I actually didn't want to accept donations, more and more people are asking to donate so... I don't know, if you really feel like donating then I obviously highly appreciate it but **PLEASE** never feel forced to donate or anything. It won't change how I work on Noctalia, it's a project that I work on for fun in the end.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R01IX85B)
+
+---
+
+#### Special Thanks
+
+Thank you to everyone who supports me and this project 💜!
+* Gohma
+
 ---
 
 ## License

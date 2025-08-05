@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import qs.Settings
@@ -113,7 +113,6 @@ Column {
                         modelData.secondaryActivate && modelData.secondaryActivate();
                     } else if (mouse.button === Qt.RightButton) {
                         trayTooltip.tooltipVisible = false;
-                        console.log("Right click on", modelData.id, "hasMenu:", modelData.hasMenu, "menu:", modelData.menu);
                         // If menu is already visible, close it
                         if (trayMenu && trayMenu.visible) {
                             trayMenu.hideMenu();
@@ -138,6 +137,7 @@ Column {
             StyledTooltip {
                 id: trayTooltip
                 text: modelData.tooltipTitle || modelData.name || modelData.id || "Tray Item"
+                positionAbove: false
                 tooltipVisible: false
                 targetItem: trayIcon
                 delay: 200

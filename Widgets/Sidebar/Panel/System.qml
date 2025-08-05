@@ -1,11 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Io
+import Quickshell.Widgets
 import qs.Settings
 import qs.Widgets
+import qs.Widgets.LockScreen
 import qs.Helpers
 import qs.Services
 import qs.Components
@@ -50,38 +52,7 @@ Rectangle {
                         z: 2
                     }
 
-                    OpacityMask {
-                        anchors.fill: parent
-                        source: Image {
-                            id: avatarImage
-                            anchors.fill: parent
-                            source: Settings.settings.profileImage !== undefined ? Settings.settings.profileImage : ""
-                            fillMode: Image.PreserveAspectCrop
-                            asynchronous: true
-                            cache: false
-                            sourceSize.width: 44
-                            sourceSize.height: 44
-                        }
-                        maskSource: Rectangle {
-                            width: 44
-                            height: 44
-                            radius: 22
-                            visible: false
-                        }
-                        visible: Settings.settings.profileImage !== undefined && Settings.settings.profileImage !== ""
-                        z: 1
-                    }
-
-                    // Fallback icon
-                    Text {
-                        anchors.centerIn: parent
-                        text: "person"
-                        font.family: "Material Symbols Outlined"
-                        font.pixelSize: 24
-                        color: Theme.onAccent
-                        visible: Settings.settings.profileImage === undefined || Settings.settings.profileImage === ""
-                        z: 0
-                    }
+                    Avatar {}
                 }
 
                 // User info text
@@ -409,7 +380,7 @@ Rectangle {
         running: false
     }
 
-        Process {
+    Process {
         id: logoutProcessNiri
         command: ["niri", "msg", "action", "quit", "--skip-confirmation"]
         running: false
@@ -418,6 +389,12 @@ Rectangle {
     Process {
         id: logoutProcessHyprland
         command: ["hyprctl", "dispatch", "exit"]
+        running: false
+    }
+
+    Process {
+        id: logoutProcess
+        command: ["loginctl", "terminate-user", Quickshell.env("USER")]
         running: false
     }
 
@@ -443,7 +420,6 @@ Rectangle {
     function reboot() {
         rebootProcess.running = true;
     }
-
 
     property bool panelVisible: false
 

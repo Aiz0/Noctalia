@@ -30,8 +30,8 @@ PanelWindow {
     }
 
     onVisibleChanged: {
-        if (wallpaperPanelModal.visible) {
-            wallpapers = WallpaperManager.wallpaperList;
+        if (wallpaperPanel.visible) {
+            wallpapers = WallpaperManager.wallpaperList
         } else {
             wallpapers = [];
         }
@@ -40,7 +40,7 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         color: Theme.backgroundPrimary
-        radius: 24
+        radius: 20
         ColumnLayout {
             anchors.fill: parent
             anchors.margins: 32
@@ -81,7 +81,9 @@ PanelWindow {
                         id: closeButtonArea
                         anchors.fill: parent
                         hoverEnabled: true
-                        onClicked: wallpaperPanelModal.visible = false
+                        onClicked: {
+                            wallpaperPanel.visible =  false;
+                        }
                         cursorShape: Qt.PointingHandCursor
                     }
                 }
@@ -114,7 +116,7 @@ PanelWindow {
                         cellWidth: Math.max(120, (scrollView.width / 3) - 12)
                         cellHeight: cellWidth * 0.6
                         model: wallpapers
-                        cacheBuffer: 32
+                        cacheBuffer: 64
                         leftMargin: 8
                         rightMargin: 8
                         topMargin: 8
@@ -129,7 +131,7 @@ PanelWindow {
                                 color: Qt.darker(Theme.backgroundPrimary, 1.1)
                                 radius: 12
                                 border.color: Settings.settings.currentWallpaper === modelData ? Theme.accentPrimary : Theme.outline
-                                border.width: Settings.settings.currentWallpaper === modelData ? 3 : 1
+                                border.width: 2
                                 Image {
                                     id: wallpaperImage
                                     anchors.fill: parent
@@ -137,8 +139,19 @@ PanelWindow {
                                     fillMode: Image.PreserveAspectCrop
                                     asynchronous: true
                                     cache: true
-                                    sourceSize.width: Math.min(width, 150)
-                                    sourceSize.height: Math.min(height, 90)
+                                    smooth: true
+                                    mipmap: true
+                                    // Limit memory usage - FullHD/4 on width and height
+                                    sourceSize.width: Math.min(width, 480)
+                                    sourceSize.height: Math.min(height, 270)
+                                    // Opacity animation once image is ready
+                                    opacity: (wallpaperImage.status == Image.Ready) ? 1.0 : 0.0
+                                    Behavior on opacity {
+                                        NumberAnimation {
+                                            duration: 300
+                                            easing.type: Easing.OutCubic
+                                        }
+                                    }
                                 }
                                 MouseArea {
                                     anchors.fill: parent

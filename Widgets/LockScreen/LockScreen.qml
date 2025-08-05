@@ -2,15 +2,16 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Effects
-import Qt5Compat.GraphicalEffects
-import Quickshell.Wayland
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Services.Pam
 import Quickshell.Io
+import Quickshell.Widgets
+import qs.Components
 import qs.Settings
 import qs.Services
-import qs.Components
-import "../Helpers/Weather.js" as WeatherHelper
+import qs.Widgets.LockScreen
+import "../../Helpers/Weather.js" as WeatherHelper
 
 WlSessionLock {
     id: lock
@@ -31,7 +32,7 @@ WlSessionLock {
     Component.onCompleted: {
         Qt.callLater(function () {
             fetchWeatherData();
-        })
+        });
     }
 
     function fetchWeatherData() {
@@ -134,8 +135,8 @@ WlSessionLock {
             fillMode: Image.PreserveAspectCrop
             source: WallpaperManager.currentWallpaper !== "" ? WallpaperManager.currentWallpaper : ""
             cache: true
-            smooth: false
-            visible: true // source for MultiEffect
+            smooth: true
+            mipmap: false
         }
 
         MultiEffect {
@@ -145,6 +146,7 @@ WlSessionLock {
             blurEnabled: true
             blur: 0.48   // controls blur strength (0 to 1)
             blurMax: 128 // max blur radius in pixels
+            // transparentBorder: true
         }
 
         ColumnLayout {
@@ -159,39 +161,21 @@ WlSessionLock {
                 radius: 40
                 color: Theme.accentPrimary
 
-                Image {
-                    id: avatarImage
+                Rectangle {
                     anchors.fill: parent
-                    anchors.margins: 4
-                    source: Settings.settings.profileImage
-                    fillMode: Image.PreserveAspectCrop
-                    visible: false
-                    asynchronous: true
+                    color: "transparent"
+                    radius: 40
+                    border.color: Theme.accentPrimary
+                    border.width: 3
+                    z: 2
                 }
-                OpacityMask {
-                    anchors.fill: avatarImage
-                    source: avatarImage
-                    maskSource: Rectangle {
-                        width: avatarImage.width
-                        height: avatarImage.height
-                        radius: avatarImage.width / 2
-                        visible: false
-                    }
-                    visible: Settings.settings.profileImage !== ""
-                }
-                Text {
-                    anchors.centerIn: parent
-                    text: "person"
-                    font.family: "Material Symbols Outlined"
-                    font.pixelSize: 32
-                    color: Theme.onAccent
-                    visible: Settings.settings.profileImage === ""
-                }
+
+                Avatar {}
+
                 layer.enabled: true
-                layer.effect: Glow {
-                    color: Theme.accentPrimary
-                    radius: 8
-                    samples: 16
+                layer.effect: MultiEffect {
+                    shadowEnabled: true
+                    shadowColor: Theme.accentPrimary
                 }
             }
 
@@ -256,7 +240,7 @@ WlSessionLock {
                 width: parent.width * 0.8
                 height: 44
                 color: Theme.overlay
-                radius: 22
+                radius: 20
                 visible: lock.errorMessage !== ""
 
                 Text {
@@ -274,7 +258,7 @@ WlSessionLock {
                 Layout.alignment: Qt.AlignHCenter
                 width: 120
                 height: 44
-                radius: 22
+                radius: 20
                 opacity: unlockButtonArea.containsMouse ? 0.8 : 0.5
                 color: unlockButtonArea.containsMouse ? Theme.accentPrimary : Theme.surface
                 border.color: Theme.accentPrimary
@@ -315,7 +299,7 @@ WlSessionLock {
             position: "bottomleft"
             size: 1.3
             fillColor: (Theme.backgroundPrimary !== undefined && Theme.backgroundPrimary !== null) ? Theme.backgroundPrimary : "#222"
-            offsetX: screen.width / 2 + 30
+            offsetX: screen.width / 2 + 38
             offsetY: 0
             anchors.top: parent.top
             visible: Settings.settings.showCorners
@@ -327,7 +311,7 @@ WlSessionLock {
             position: "bottomright"
             size: 1.3
             fillColor: (Theme.backgroundPrimary !== undefined && Theme.backgroundPrimary !== null) ? Theme.backgroundPrimary : "#222"
-            offsetX: - Screen.width / 2 - 30
+            offsetX: -Screen.width / 2 - 38
             offsetY: 0
             anchors.top: parent.top
             visible: Settings.settings.showCorners
@@ -347,6 +331,7 @@ WlSessionLock {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.topMargin: 0
+                anchors.bottomMargin: 0
                 spacing: 8
 
                 Text {
@@ -422,6 +407,15 @@ WlSessionLock {
             onTriggered: {
                 fetchWeatherData();
             }
+        }
+
+        ColumnLayout {
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.margins: 32
+            spacing: 12
+
+            BatteryCharge {}
         }
 
         ColumnLayout {

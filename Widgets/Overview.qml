@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
-import Qt5Compat.GraphicalEffects
 import qs.Services
 import qs.Settings
 
@@ -34,6 +33,7 @@ ShellRoot {
                 source: wallpaperSource
                 cache: true
                 smooth: true
+                mipmap: false
                 visible: wallpaperSource !== "" // Show the original for FastBlur input
             }
             MultiEffect {

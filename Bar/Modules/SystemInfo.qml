@@ -8,6 +8,8 @@ Column {
     spacing: 10
     visible: Settings.settings.showSystemInfoInBar
 
+    width: Math.floor(cpuUsageLayout.width + cpuTempLayout.width + memoryUsageLayout.width + (2 * 10))
+
     Column {
         id: cpuUsageLayout
         spacing: 6
@@ -15,7 +17,7 @@ Column {
         Text {
             id: cpuUsageIcon
             font.family: "Material Symbols Outlined"
-            font.pixelSize: Theme.fontSizeBody
+            font.pixelSize: Theme.fontSizeBody * Theme.scale(Screen)
             text: "speed"
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -25,7 +27,7 @@ Column {
         Text {
             id: cpuUsageText
             font.family: Theme.fontFamilyMono
-            font.pixelSize: Theme.fontSizeCaption
+            font.pixelSize: Theme.fontSizeCaption * Theme.scale(Screen)
             color: Theme.textPrimary
             text: Sysinfo.cpuUsageStr
             anchors.horizontalCenter: parent.horizontalCenter
@@ -39,7 +41,7 @@ Column {
         spacing: 3
         Text {
             font.family: "Material Symbols Outlined"
-            font.pixelSize: Theme.fontSizeBody
+            font.pixelSize: Theme.fontSizeBody * Theme.scale(Screen)
             text: "thermometer"
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -48,7 +50,7 @@ Column {
 
         Text {
             font.family: Theme.fontFamilyMono
-            font.pixelSize: Theme.fontSizeCaption
+            font.pixelSize: Theme.fontSizeCaption * Theme.scale(Screen)
             color: Theme.textPrimary
             text: Sysinfo.cpuTempStr
             anchors.horizontalCenter: parent.horizontalCenter
@@ -62,7 +64,7 @@ Column {
         spacing: 6
         Text {
             font.family: "Material Symbols Outlined"
-            font.pixelSize: Theme.fontSizeBody
+            font.pixelSize: Theme.fontSizeBody * Theme.scale(Screen)
             text: "memory"
             color: Theme.accentPrimary
             horizontalAlignment: Text.AlignHCenter
@@ -71,7 +73,7 @@ Column {
 
         Text {
             font.family: Theme.fontFamilyMono
-            font.pixelSize: Theme.fontSizeCaption
+            font.pixelSize: Theme.fontSizeCaption * Theme.scale(Screen)
             color: Theme.textPrimary
             text: Sysinfo.memoryUsageStr
             horizontalAlignment: Text.AlignHCenter

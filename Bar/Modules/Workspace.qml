@@ -40,7 +40,7 @@ Item {
         return total;
     }
 
-    width: 36
+    width: 36 * Theme.scale(Screen)
 
     Component.onCompleted: {
         localWorkspaces.clear();
@@ -115,14 +115,14 @@ Item {
 
     Rectangle {
         id: workspaceBackground
-        height: parent.height - 15
-        width: 26
+        height: parent.height - 15 * Theme.scale(Screen)
+        width: 26 * Theme.scale(Screen)
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         radius: 12
         color: Theme.surfaceVariant
         border.color: Qt.rgba(Theme.textPrimary.r, Theme.textPrimary.g, Theme.textPrimary.b, 0.1)
-        border.width: 1
+        border.width: 1 * Theme.scale(screen)
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowColor: "black"
@@ -145,7 +145,7 @@ Item {
             model: localWorkspaces
             Item {
                 id: workspacePillContainer
-                width: 12
+                width: 12 * Theme.scale(Screen)
                 height: {
                     if (model.isFocused)
                         return 44;
@@ -245,12 +245,12 @@ Item {
                 Rectangle {
                     id: pillBurst
                     anchors.centerIn: workspacePillContainer
-                    width: workspacePillContainer.width + 18 * root.masterProgress
-                    height: workspacePillContainer.height + 18 * root.masterProgress
+                    width: workspacePillContainer.width + 18 * root.masterProgress * Theme.scale(Screen)
+                    height: workspacePillContainer.height + 18 * root.masterProgress * Theme.scale(Screen)
                     radius: height / 2
                     color: "transparent"
                     border.color: root.effectColor
-                    border.width: 2 + 6 * (1.0 - root.masterProgress)
+                    border.width: (2 + 6 * (1.0 - root.masterProgress)) * Theme.scale(screen)
                     opacity: root.effectsActive && model.isFocused ? (1.0 - root.masterProgress) * 0.7 : 0
                     visible: root.effectsActive && model.isFocused
                     z: 1

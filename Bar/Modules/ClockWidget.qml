@@ -15,7 +15,7 @@ Rectangle {
         text: Time.time
         font.family: Theme.fontMono
         font.weight: Font.Bold
-        font.pixelSize: Theme.fontSizeLarge
+        font.pixelSize: Theme.fontSizeLarge * Theme.scale(screen)
         color: Theme.textPrimary
         anchors.centerIn: parent
     }

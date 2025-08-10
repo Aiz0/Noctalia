@@ -1,26 +1,29 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
-import QtQuick.Effects
 import qs.Bar.Modules
-import qs.Settings
-import qs.Services
 import qs.Components
 import qs.Helpers
+import qs.Services
+import qs.Settings
 import qs.Widgets
-import qs.Widgets.Sidebar
-import qs.Widgets.Sidebar.Panel
 import qs.Widgets.Notification
+import qs.Widgets.SidePanel
 
+// Main bar component - creates panels on selected monitors with widgets and corners
 Scope {
     id: rootScope
+
     property var shell
+    property alias visible: barRootItem.visible
 
     Item {
         id: barRootItem
+
         anchors.fill: parent
 
         Variants {
@@ -31,6 +34,7 @@ Scope {
 
                 PanelWindow {
                     id: panel
+
                     screen: modelData
                     color: "transparent"
                     implicitWidth: barBackground.width
@@ -45,7 +49,7 @@ Scope {
 
                     Rectangle {
                         id: barBackground
-                        width: 36
+                        width: 36 * Theme.scale(panel.screen)
                         height: parent.height
                         color: Theme.backgroundPrimary
                         anchors.top: parent.top
@@ -56,8 +60,8 @@ Scope {
                         id: leftWidgetsRow
                         anchors.horizontalCenter: barBackground.horizontalCenter
                         anchors.top: barBackground.top
-                        anchors.topMargin: 18
-                        spacing: 12
+                        anchors.topMargin: 18 * Theme.scale(panel.screen)
+                        spacing: 12 * Theme.scale(panel.screen)
 
                         PanelPopup {
                             id: sidebarPopup
@@ -90,6 +94,7 @@ Scope {
 
                     Workspace {
                         id: workspace
+
                         screen: modelData
                         anchors.horizontalCenter: barBackground.horizontalCenter
                         anchors.verticalCenter: barBackground.verticalCenter
@@ -99,11 +104,12 @@ Scope {
                         id: rightWidgetsRow
                         anchors.horizontalCenter: barBackground.horizontalCenter
                         anchors.bottom: barBackground.bottom
-                        anchors.bottomMargin: 18
-                        spacing: 12
+                        anchors.bottomMargin: 18 * Theme.scale(panel.screen)
+                        spacing: 12 * Theme.scale(panel.screen)
 
                         SystemTray {
                             id: systemTrayModule
+
                             shell: rootScope.shell
                             anchors.horizontalCenter: parent.horizontalCenter
                             bar: panel
@@ -116,6 +122,15 @@ Scope {
 
                         NotificationIcon {
                             anchors.horizontalCenter: parent.horizontalCenter
+                            shell: rootScope.shell
+                        }
+
+                        Wifi {
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        Bluetooth {
+                            anchors.verticalCenter: parent.verticalCenter
                         }
 
                         Battery {
@@ -125,12 +140,14 @@ Scope {
 
                         Brightness {
                             id: widgetsBrightness
+
                             screen: modelData
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         Volume {
                             id: widgetsVolume
+
                             shell: rootScope.shell
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
@@ -140,121 +157,116 @@ Scope {
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
-
-                    Background {}
-                    Overview {}
                 }
 
-                PanelWindow {
-                    id: topLeftPanel
-                    anchors.top: true
-                    anchors.left: true
+                Loader {
+                    active: Settings.settings.showCorners && (Settings.settings.barMonitors.includes(modelData.name) || (Settings.settings.barMonitors.length === 0))
 
-                    color: "transparent"
-                    screen: modelData
-                    margins.left: 36
-                    WlrLayershell.exclusionMode: ExclusionMode.Ignore
-                    visible: true
-                    // WlrLayershell.layer: WlrLayer.Background
-                    // aboveWindows: false
-                    // WlrLayershell.namespace: "swww-daemon"
-                    implicitHeight: 24
+                    sourceComponent: Item {
+                        PanelWindow {
+                            id: topLeftPanel
 
-                    Corners {
-                        id: topLeftCorner
-                        position: "bottomleft"
-                        size: 1.3
-                        fillColor: (Theme.backgroundPrimary !== undefined && Theme.backgroundPrimary !== null) ? Theme.backgroundPrimary : "#222"
-                        offsetX: -39
-                        offsetY: 0
-                        anchors.top: parent.top
-                        visible: Settings.settings.showCorners
-                    }
-                }
+                            anchors.top: true
+                            anchors.left: true
+                            color: "transparent"
+                            screen: modelData
+                            margins.left: 36 * Theme.scale(screen) - 1
+                            WlrLayershell.exclusionMode: ExclusionMode.Ignore
+                            WlrLayershell.layer: WlrLayer.Top
+                            WlrLayershell.namespace: "swww-daemon"
+                            aboveWindows: false
+                            implicitHeight: 24
 
-                PanelWindow {
-                    id: topRightPanel
-                    anchors.top: true
-                    anchors.right: true
-                    color: "transparent"
-                    screen: modelData
+                            Corner {
+                                id: topLeftCorner
 
-                    WlrLayershell.exclusionMode: ExclusionMode.Ignore
-                    visible: true
-                    // WlrLayershell.layer: WlrLayer.Background
-                    // aboveWindows: false
-                    // WlrLayershell.namespace: "swww-daemon"
+                                position: "bottomleft"
+                                size: 1.3
+                                fillColor: (Theme.backgroundPrimary !== undefined && Theme.backgroundPrimary !== null) ? Theme.backgroundPrimary : "#222"
+                                offsetX: -39
+                                offsetY: 0
+                                anchors.top: parent.top
+                            }
+                        }
 
-                    implicitHeight: 24
+                        PanelWindow {
+                            id: topRightPanel
 
-                    Corners {
-                        id: topRightCorner
-                        position: "bottomright"
-                        size: 1.3
-                        fillColor: (Theme.backgroundPrimary !== undefined && Theme.backgroundPrimary !== null) ? Theme.backgroundPrimary : "#222"
-                        offsetX: 39
-                        offsetY: 0
-                        anchors.top: parent.top
-                        visible: Settings.settings.showCorners
-                    }
-                }
+                            anchors.top: true
+                            anchors.right: true
+                            color: "transparent"
+                            screen: modelData
+                            WlrLayershell.exclusionMode: ExclusionMode.Ignore
+                            WlrLayershell.layer: WlrLayer.Top
+                            WlrLayershell.namespace: "swww-daemon"
+                            aboveWindows: false
+                            implicitHeight: 24
 
-                PanelWindow {
-                    id: bottomLeftPanel
-                    anchors.bottom: true
-                    anchors.left: true
-                    color: "transparent"
-                    screen: modelData
-                    margins.left: 36
-                    WlrLayershell.exclusionMode: ExclusionMode.Ignore
-                    visible: true
-                    // WlrLayershell.layer: WlrLayer.Background
-                    // aboveWindows: false
-                    // WlrLayershell.namespace: "swww-daemon"
+                            Corner {
+                                id: topRightCorner
 
-                    implicitHeight: 24
+                                position: "bottomright"
+                                size: 1.3
+                                fillColor: (Theme.backgroundPrimary !== undefined && Theme.backgroundPrimary !== null) ? Theme.backgroundPrimary : "#222"
+                                offsetX: 39
+                                offsetY: 0
+                                anchors.top: parent.top
+                            }
+                        }
 
-                    Corners {
-                        id: bottomLeftCorner
-                        position: "topleft"
-                        size: 1.3
-                        fillColor: Theme.backgroundPrimary
-                        offsetX: -39
-                        offsetY: 0
-                        anchors.top: parent.top
-                        visible: Settings.settings.showCorners
-                    }
-                }
+                        PanelWindow {
+                            id: bottomLeftPanel
 
-                PanelWindow {
-                    id: bottomRightPanel
-                    anchors.bottom: true
-                    anchors.right: true
-                    color: "transparent"
-                    screen: modelData
-                    WlrLayershell.exclusionMode: ExclusionMode.Ignore
-                    visible: true
-                    // WlrLayershell.layer: WlrLayer.Background
-                    // aboveWindows: false
-                    // WlrLayershell.namespace: "swww-daemon"
+                            anchors.bottom: true
+                            anchors.left: true
+                            color: "transparent"
+                            screen: modelData
+                            margins.left: 36 * Theme.scale(screen) - 1
+                            WlrLayershell.exclusionMode: ExclusionMode.Ignore
+                            WlrLayershell.layer: WlrLayer.Top
+                            WlrLayershell.namespace: "swww-daemon"
+                            aboveWindows: false
+                            implicitHeight: 24
 
-                    implicitHeight: 24
+                            Corner {
+                                id: bottomLeftCorner
 
-                    Corners {
-                        id: bottomRightCorner
-                        position: "topright"
-                        size: 1.3
-                        fillColor: Theme.backgroundPrimary
-                        offsetX: 39
-                        offsetY: 0
-                        anchors.top: parent.top
-                        visible: Settings.settings.showCorners
+                                position: "topleft"
+                                size: 1.3
+                                fillColor: Theme.backgroundPrimary
+                                offsetX: -39
+                                offsetY: 0
+                                anchors.top: parent.top
+                            }
+                        }
+
+                        PanelWindow {
+                            id: bottomRightPanel
+
+                            anchors.bottom: true
+                            anchors.right: true
+                            color: "transparent"
+                            screen: modelData
+                            WlrLayershell.exclusionMode: ExclusionMode.Ignore
+                            WlrLayershell.layer: WlrLayer.Top
+                            WlrLayershell.namespace: "swww-daemon"
+                            aboveWindows: false
+                            implicitHeight: 24
+
+                            Corner {
+                                id: bottomRightCorner
+
+                                position: "topright"
+                                size: 1.3
+                                fillColor: Theme.backgroundPrimary
+                                offsetX: 39
+                                offsetY: 0
+                                anchors.top: parent.top
+                            }
+                        }
                     }
                 }
             }
         }
     }
-
-    // This alias exposes the visual bar's visibility to the outside world
-    property alias visible: barRootItem.visible
 }

@@ -313,7 +313,7 @@ PanelWithOverlay {
                         settingsModal.visible = true;
                     }
                     onWallpaperRequested: {
-                        wallpaperPanel.visible =  true;
+                        wallpaperPanel.visible = true;
                     }
                 }
             }

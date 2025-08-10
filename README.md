@@ -147,6 +147,13 @@ window-rule {
 
 To make the weather widget, wallpaper manager and record button work you will have to open up the settings menu in to right panel (top right button to open panel) and edit said things accordingly.
 
+### Launcher:
+
+The launcher supports special commands for math calculation and clipboard history.
+Once the launcher open you can invoke those special command by typing ">"
+* \>calc : lets you do simple math
+* \>clip : shows clipboard history
+
 </details>
 
 </br>
@@ -184,10 +191,9 @@ qs ipc call globalIPC toggleIdleInhibitor
 
 You will need to install a few things to get everything working:
 
-- `qt6-5compat` for some graphical effects
 - `cava` so the audio visualizer works
 - `gpu-screen-recorder` so that the record button works
-- `xdg-desktop-portal-gnome` or any other xdg-desktop-portal
+- `xdg-desktop-portal-gnome` or any other xdg-desktop-portal (for `gpu-screen-recorder`)
 - `material-symbols-git` so the icons properly show up
 - `swww` to add fancy wallpaper animations (optional)
 - `wallust` to theme the setup based on wallpaper (optional)
@@ -204,7 +210,7 @@ It is perfect now
 
 ## 💜 Credits
 
-Huge thanks to [**@ferrreo**](https://github.com/ferrreo) for all the changes they did and all the cool features they added!
+Huge thanks to [**@ferrreo**](https://github.com/ferrreo) and [**@quadbyte**](https://github.com/quadbyte) for all the changes they did and all the cool features they added!
 
 ---
 

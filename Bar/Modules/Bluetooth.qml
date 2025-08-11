@@ -17,31 +17,33 @@ Item {
     // Bluetooth icon/button
     Item {
         id: bluetoothIcon
-        width: 22; height: 22
+        width: 22
+        height: 22
         visible: Settings.settings.bluetoothEnabled
 
-            // Check if any devices are currently connected
-    property bool hasConnectedDevices: {
-        if (!Bluetooth.defaultAdapter) return false;
-        
-        for (let i = 0; i < Bluetooth.defaultAdapter.devices.count; i++) {
-            if (Bluetooth.defaultAdapter.devices.valueAt(i).connected) {
-                return true;
+        // Check if any devices are currently connected
+        property bool hasConnectedDevices: {
+            if (!Bluetooth.defaultAdapter)
+                return false;
+
+            for (let i = 0; i < Bluetooth.defaultAdapter.devices.count; i++) {
+                if (Bluetooth.defaultAdapter.devices.valueAt(i).connected) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
-    }
 
         Text {
             id: bluetoothText
             anchors.centerIn: parent
             text: {
                 if (!Bluetooth.defaultAdapter || !Bluetooth.defaultAdapter.enabled) {
-                    return "bluetooth_disabled"
+                    return "bluetooth_disabled";
                 } else if (parent.hasConnectedDevices) {
-                    return "bluetooth_connected"
+                    return "bluetooth_connected";
                 } else {
-                    return "bluetooth"
+                    return "bluetooth";
                 }
             }
             font.family: mouseAreaBluetooth.containsMouse ? "Material Symbols Rounded" : "Material Symbols Outlined"
@@ -95,10 +97,10 @@ Item {
             implicitHeight: 480
             visible: false
             color: "transparent"
-            anchors.top: true
-            anchors.right: true
-            margins.right: 0
-            margins.top: 0
+            anchors.bottom: true
+            anchors.left: true
+            margins.left: 4
+            margins.bottom: 4
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 
             onVisibleChanged: {

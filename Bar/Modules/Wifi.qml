@@ -24,7 +24,8 @@ Item {
     // WiFi icon/button
     Item {
         id: wifiIcon
-        width: 22; height: 22
+        width: 22
+        height: 22
         visible: Settings.settings.wifiEnabled
 
         property int currentSignal: {
@@ -48,7 +49,7 @@ Item {
                         break;
                     }
                 }
-                return connected ? network.signalIcon(parent.currentSignal) : "wifi_off"
+                return connected ? network.signalIcon(parent.currentSignal) : "wifi_off";
             }
             font.family: mouseAreaWifi.containsMouse ? "Material Symbols Rounded" : "Material Symbols Outlined"
             font.pixelSize: 16 * Theme.scale(Screen)
@@ -97,10 +98,10 @@ Item {
             implicitHeight: 480
             visible: false
             color: "transparent"
-            anchors.top: true
-            anchors.right: true
-            margins.right: 0
-            margins.top: 0
+            anchors.bottom: true
+            anchors.left: true
+            margins.left: 4
+            margins.bottom: 4
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 
             Rectangle {
@@ -268,7 +269,7 @@ Item {
                                                 passwordPromptSsid = modelData.ssid;
                                                 showPasswordPrompt = true;
                                                 passwordInput = ""; // Clear previous input
-                                                Qt.callLater(function() {
+                                                Qt.callLater(function () {
                                                     passwordInputField.forceActiveFocus();
                                                 });
                                             } else {

@@ -126,11 +126,11 @@ Scope {
                         }
 
                         Wifi {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         Bluetooth {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         Battery {

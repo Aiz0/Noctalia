@@ -34,14 +34,14 @@ Variants {
 
       WlrLayershell.namespace: "noctalia-bar"
 
-      implicitHeight: Math.round(Style.barHeight * scaling)
+      implicitWidth: Math.round(Style.barHeight * scaling)
       color: Color.transparent
 
       anchors {
-        top: Settings.data.bar.position === "top"
-        bottom: Settings.data.bar.position === "bottom"
-        left: true
-        right: true
+        left: Settings.data.bar.position === "top"
+        right: Settings.data.bar.position === "bottom"
+        top: true
+        bottom: true
       }
 
       // Floating bar margins - only apply when floating is enabled
@@ -69,14 +69,14 @@ Variants {
 
         // ------------------------------
         // Left Section - Dynamic Widgets
-        Row {
+        Column {
           id: leftSection
           objectName: "leftSection"
 
           height: parent.height
-          anchors.left: parent.left
-          anchors.leftMargin: Style.marginS * scaling
-          anchors.verticalCenter: parent.verticalCenter
+          anchors.top: parent.top
+          anchors.topMargin: Style.marginS * scaling
+          anchors.horizontalCenter: parent.horizontalCenter
           spacing: Style.marginS * scaling
 
           Repeater {
@@ -91,18 +91,18 @@ Variants {
                 "sectionWidgetIndex": index,
                 "sectionWidgetsCount": Settings.data.bar.widgets.left.length
               }
-              anchors.verticalCenter: parent.verticalCenter
+              anchors.horizontalCenter: parent.horizontalCenter
             }
           }
         }
 
         // ------------------------------
         // Center Section - Dynamic Widgets
-        Row {
+        Column {
           id: centerSection
           objectName: "centerSection"
 
-          height: parent.height
+          width: parent.width
           anchors.horizontalCenter: parent.horizontalCenter
           anchors.verticalCenter: parent.verticalCenter
           spacing: Style.marginS * scaling
@@ -119,21 +119,21 @@ Variants {
                 "sectionWidgetIndex": index,
                 "sectionWidgetsCount": Settings.data.bar.widgets.center.length
               }
-              anchors.verticalCenter: parent.verticalCenter
+              anchors.horizontalCenter: parent.horizontalCenter
             }
           }
         }
 
         // ------------------------------
         // Right Section - Dynamic Widgets
-        Row {
+        Column {
           id: rightSection
           objectName: "rightSection"
 
-          height: parent.height
-          anchors.right: bar.right
-          anchors.rightMargin: Style.marginS * scaling
-          anchors.verticalCenter: bar.verticalCenter
+          width: parent.width
+          anchors.bottom: bar.bottom
+          anchors.bottomMargin: Style.marginS * scaling
+          anchors.horizontalCenter: bar.horizontalCenter
           spacing: Style.marginS * scaling
 
           Repeater {
@@ -148,7 +148,7 @@ Variants {
                 "sectionWidgetIndex": index,
                 "sectionWidgetsCount": Settings.data.bar.widgets.right.length
               }
-              anchors.verticalCenter: parent.verticalCenter
+              anchors.horizontalCenter: parent.horizontalCenter
             }
           }
         }

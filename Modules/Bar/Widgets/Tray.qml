@@ -27,14 +27,14 @@ Rectangle {
   }
 
   visible: SystemTray.items.values.length > 0
-  implicitWidth: trayLayout.implicitWidth + Style.marginM * scaling * 2
-  implicitHeight: Math.round(Style.capsuleHeight * scaling)
+  implicitHeight: trayLayout.implicitHeight + Style.marginM * scaling * 2
+  implicitWidth: Math.round(Style.capsuleHeight * scaling)
   radius: Math.round(Style.radiusM * scaling)
   color: Color.mSurfaceVariant
 
   Layout.alignment: Qt.AlignVCenter
 
-  RowLayout {
+  ColumnLayout {
     id: trayLayout
     anchors.centerIn: parent
     spacing: Style.marginS * scaling
@@ -112,8 +112,8 @@ Rectangle {
                            trayPanel.open()
 
                            // Anchor the menu to the tray icon item (parent) and position it below the icon
-                           const menuX = (width / 2) - (trayMenu.item.width / 2)
-                           const menuY = Math.round(Style.barHeight * scaling)
+                           const menuX = Math.round(Style.barHeight * scaling)
+                           const menuY = 0
                            trayMenu.item.menu = modelData.menu
                            trayMenu.item.showAt(parent, menuX, menuY)
                          } else {

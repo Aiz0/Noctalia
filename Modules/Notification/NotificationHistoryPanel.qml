@@ -13,7 +13,7 @@ NPanel {
   id: root
 
   preferredWidth: 380
-  preferredHeight: 500
+  preferredHeight: screen.height
   panelAnchorRight: true
   panelKeyboardFocus: true
 

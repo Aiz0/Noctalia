@@ -1,3 +1,5 @@
+//TODO: Doesn't work right now
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -35,7 +37,7 @@ RowLayout {
   readonly property string visualizerType: (widgetSettings.visualizerType !== undefined && widgetSettings.visualizerType !== "") ? widgetSettings.visualizerType : widgetMetadata.visualizerType
 
   // 6% of total width
-  readonly property real minWidth: Math.max(1, screen.width * 0.06)
+  readonly property real minWidth: Math.max(1, screen.height * 0.06)
   readonly property real maxWidth: minWidth * 2
 
   function getTitle() {
@@ -58,8 +60,8 @@ RowLayout {
   Rectangle {
     id: mediaMini
 
-    Layout.preferredWidth: rowLayout.implicitWidth + Style.marginM * 2 * scaling
-    Layout.preferredHeight: Math.round(Style.capsuleHeight * scaling)
+    Layout.preferredHeight: rowLayout.implicitHeight + Style.marginM * 2 * scaling
+    Layout.preferredWidth: Math.round(Style.capsuleHeight * scaling)
     Layout.alignment: Qt.AlignVCenter
 
     radius: Math.round(Style.radiusM * scaling)
@@ -123,9 +125,9 @@ RowLayout {
         }
       }
 
-      RowLayout {
+      ColumnLayout {
         id: rowLayout
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
         spacing: Style.marginS * scaling
         z: 1 // Above the visualizer
 
@@ -133,13 +135,13 @@ RowLayout {
           id: windowIcon
           icon: MediaService.isPlaying ? "media-pause" : "media-play"
           font.pointSize: Style.fontSizeL * scaling
-          verticalAlignment: Text.AlignVCenter
-          Layout.alignment: Qt.AlignVCenter
+          verticalAlignment: Text.AlignHCenter
+          Layout.alignment: Qt.AlignHCenter
           visible: !showAlbumArt && getTitle() !== "" && !trackArt.visible
         }
 
-        ColumnLayout {
-          Layout.alignment: Qt.AlignVCenter
+        RowLayout {
+          Layout.alignment: Qt.AlignHCenter
           visible: showAlbumArt
           spacing: 0
 
@@ -162,7 +164,7 @@ RowLayout {
         NText {
           id: titleText
 
-          Layout.preferredWidth: {
+          Layout.preferredHeight: {
             if (mouseArea.containsMouse) {
               return Math.round(Math.min(fullTitleMetrics.contentWidth, root.maxWidth * scaling))
             } else {
@@ -175,10 +177,13 @@ RowLayout {
           font.pointSize: Style.fontSizeS * scaling
           font.weight: Style.fontWeightMedium
           elide: Text.ElideRight
-          verticalAlignment: Text.AlignVCenter
+          verticalAlignment: Text.AlignVTop
+          horizontalAlignment: Text.AlignHCenter
           color: Color.mSecondary
+          rotation: 90
 
-          Behavior on Layout.preferredWidth {
+
+          Behavior on Layout.preferredHeight {
             NumberAnimation {
               duration: Style.animationSlow
               easing.type: Easing.InOutCubic

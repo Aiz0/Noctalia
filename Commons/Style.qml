@@ -66,7 +66,7 @@ Singleton {
   property int animationSlowest: Math.round(750 / Settings.data.general.animationSpeed)
 
   // Dimensions
-  property int barHeight: 36
+  property int barHeight: 40
   property int capsuleHeight: (barHeight * 0.73)
   property int baseWidgetSize: 32
   property int sliderWidth: 200

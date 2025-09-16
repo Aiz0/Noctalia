@@ -1,3 +1,5 @@
+//TODO: Doesn't work right now
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -114,7 +116,7 @@ RowLayout {
       anchors.rightMargin: Style.marginS * scaling
       clip: true
 
-      RowLayout {
+      ColumnLayout {
         id: contentLayout
         anchors.centerIn: parent
         spacing: Style.marginS * scaling
@@ -145,29 +147,31 @@ RowLayout {
 
         NText {
           id: titleText
-          Layout.preferredWidth: {
+
+          Layout.preferredHeight: {
             try {
               if (mouseArea.containsMouse) {
-                return Math.round(Math.min(fullTitleMetrics.contentWidth, root.maxWidth * scaling))
+                return Math.round(Math.min(fullTitleMetrics.contentWidth, root.maxHeight * scaling))
               } else {
-                return Math.round(Math.min(fullTitleMetrics.contentWidth, root.minWidth * scaling))
+                return Math.round(Math.min(fullTitleMetrics.contentWidth, root.minHeight * scaling))
               }
             } catch (e) {
-              Logger.warn("ActiveWindow", "Error calculating width:", e)
-              return root.minWidth * scaling
+              Logger.warn("ActiveWindow", "Error calculating height:", e)
+              return root.minHeight * scaling
             }
           }
-          Layout.alignment: Qt.AlignVCenter
-          horizontalAlignment: Text.AlignLeft
+          Layout.alignment: Qt.AlignHCenter
+          horizontalAlignment: Text.AlignCenter
           text: getTitle()
           font.pointSize: Style.fontSizeS * scaling
           font.weight: Style.fontWeightMedium
           elide: mouseArea.containsMouse ? Text.ElideNone : Text.ElideRight
-          verticalAlignment: Text.AlignVCenter
+          verticalAlignment: Text.AlignVBottom
           color: Color.mPrimary
           clip: true
+          rotation: -90
 
-          Behavior on Layout.preferredWidth {
+          Behavior on Layout.preferredHeight {
             NumberAnimation {
               duration: Style.animationSlow
               easing.type: Easing.InOutCubic

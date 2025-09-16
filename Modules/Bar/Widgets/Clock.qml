@@ -1,3 +1,4 @@
+// Displays Time and date on multiple line
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -33,9 +34,9 @@ Rectangle {
   readonly property bool reverseDayMonth: widgetSettings.reverseDayMonth !== undefined ? widgetSettings.reverseDayMonth : widgetMetadata.reverseDayMonth
   readonly property string displayFormat: widgetSettings.displayFormat !== undefined ? widgetSettings.displayFormat : widgetMetadata.displayFormat
 
-  implicitWidth: Math.round(layout.implicitWidth + Style.marginM * 2 * scaling)
-  implicitHeight: Math.round(Style.capsuleHeight * scaling)
-  radius: Math.round(Style.radiusS * scaling)
+  implicitHeight: Math.round(layout.implicitHeight + Style.marginM * 2 * scaling)
+  implicitWidth: Math.round(Style.capsuleHeight * 1.15 * scaling)
+  radius: Math.round(Style.radiusS * scaling * 1.15)
   color: Color.mSurfaceVariant
 
   Item {
@@ -78,47 +79,73 @@ Rectangle {
 
             if (showSeconds) {
               const seconds = now.getSeconds().toString().padStart(2, '0')
-              timeStr = `${hours}:${minutes}:${seconds}`
+              timeStr = `${hours}\n${minutes}\n${seconds}`
             } else {
-              timeStr = `${hours}:${minutes}`
+              timeStr = `${hours}\n${minutes}`
             }
           }
-
-          // Add inline date if needed
-          if (inlineDate) {
-            let dayName = now.toLocaleDateString(Qt.locale(), "ddd")
-            dayName = dayName.charAt(0).toUpperCase() + dayName.slice(1)
-            const day = now.getDate().toString().padStart(2, '0')
-            let month = now.toLocaleDateString(Qt.locale(), "MMM")
-            timeStr += " - " + (reverseDayMonth ? `${dayName}, ${month} ${day}` : `${dayName}, ${day} ${month}`)
-          }
-
           return timeStr
         }
 
-        //font.family: Settings.data.ui.fontFixed
-        font.pointSize: Style.fontSizeXS * scaling
+        font.family: Settings.data.ui.fontFixed
+        font.pointSize: Style.fontSizeL * scaling
         font.weight: Style.fontWeightBold
         color: Color.mPrimary
         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+      }
+
+      // separator
+      NText {
+          text:"🞄"
+          font.pointSize: Style.fontSizeM * scaling
+          font.weight: Style.fontWeightRegular
+          color: Color.mPrimary
+          Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+          horizontalAlignment: Text.AlignHCenter
       }
 
       // Second line
+      // modified this to display month name and weekday
       NText {
         visible: (displayFormat === "time-date-short")
         text: {
           const now = Time.date
           const day = now.getDate().toString().padStart(2, '0')
           const month = (now.getMonth() + 1).toString().padStart(2, '0')
-          return reverseDayMonth ? `${month}/${day}` : `${day}/${month}`
+          return reverseDayMonth ? `${month}\n${day}` : `${day}\n${month}`
         }
 
         // Enable fixed-width font for consistent spacing
-        //font.family: Settings.data.ui.fontFixed
-        font.pointSize: Style.fontSizeXXS * scaling
+        font.family: Settings.data.ui.fontFixed
+        font.pointSize: Style.fontSizeL * scaling
         font.weight: Style.fontWeightRegular
         color: Color.mPrimary
         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+      }
+
+      // Time Date long
+      NText {
+        visible: (displayFormat === "time-date")
+        text: {
+
+
+          const now = Time.date
+          let dayName = now.toLocaleDateString(Qt.locale(), "ddd")
+          dayName = dayName.charAt(0).toUpperCase() + dayName.slice(1)
+          const day = now.getDate().toString().padStart(2, '0')
+          let month = now.toLocaleDateString(Qt.locale(), "MMM")
+          return reverseDayMonth ? `${dayName}\n${month}\n${day}` : `${dayName}\n${day}\n${month}`
+        }
+
+        // Enable fixed-width font for consistent spacing
+        font.family: Settings.data.ui.fontFixed
+        font.pointSize: Style.fontSizeL * scaling
+        font.weight: Style.fontWeightRegular
+        color: Color.mPrimary
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
       }
     }
   }

@@ -47,8 +47,8 @@ Item {
 
   signal workspaceChanged(int workspaceId, color accentColor)
 
-  implicitHeight: Math.round(Style.barHeight * scaling)
-  implicitWidth: {
+  implicitWidth: Math.round(Style.barHeight * scaling)
+  implicitHeight: {
     let total = 0
     for (var i = 0; i < localWorkspaces.count; i++) {
       const ws = localWorkspaces.get(i)
@@ -148,9 +148,9 @@ Item {
 
   Rectangle {
     id: workspaceBackground
-    width: parent.width
+    height: parent.height
 
-    height: Math.round(Style.capsuleHeight * scaling)
+    width: Math.round(Style.capsuleHeight * scaling)
     radius: Math.round(Style.radiusM * scaling)
     color: Color.mSurfaceVariant
 
@@ -158,19 +158,19 @@ Item {
     anchors.verticalCenter: parent.verticalCenter
   }
 
-  Row {
+  Column {
     id: pillRow
     spacing: spacingBetweenPills
-    anchors.verticalCenter: workspaceBackground.verticalCenter
-    width: root.width - horizontalPadding * 2
-    x: horizontalPadding
+    anchors.horizontalCenter: workspaceBackground.horizontalCenter
+    height: root.height - horizontalPadding * 2
+    y: horizontalPadding
     Repeater {
       id: workspaceRepeater
       model: localWorkspaces
       Item {
         id: workspacePillContainer
-        height: (labelMode !== "none") ? Math.round(18 * scaling) : Math.round(14 * scaling)
-        width: root.calculatedWsWidth(model)
+        width: (labelMode !== "none") ? Math.round(18 * scaling) : Math.round(14 * scaling)
+        height: root.calculatedWsWidth(model)
 
         Rectangle {
           id: pill

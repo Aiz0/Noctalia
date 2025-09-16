@@ -35,31 +35,31 @@ RowLayout {
   readonly property bool showNetworkStats: (widgetSettings.showNetworkStats !== undefined) ? widgetSettings.showNetworkStats : widgetMetadata.showNetworkStats
   readonly property bool showDiskUsage: (widgetSettings.showDiskUsage !== undefined) ? widgetSettings.showDiskUsage : widgetMetadata.showDiskUsage
 
-  Layout.alignment: Qt.AlignVCenter
+  Layout.alignment: Qt.AlignHCenter
   spacing: Style.marginS * scaling
 
   Rectangle {
-    Layout.preferredHeight: Math.round(Style.capsuleHeight * scaling)
-    Layout.preferredWidth: mainLayout.implicitWidth + Style.marginM * scaling * 2
-    Layout.alignment: Qt.AlignVCenter
+    Layout.preferredWidth: Math.round(Style.capsuleHeight * scaling)
+    Layout.preferredHeight: mainLayout.implicitHeight + Style.marginM * scaling * 2
+    Layout.alignment: Qt.AlignHCenter
 
     radius: Math.round(Style.radiusM * scaling)
     color: Color.mSurfaceVariant
 
-    RowLayout {
+    ColumnLayout {
       id: mainLayout
       anchors.centerIn: parent // Better centering than margins
-      width: parent.width - Style.marginM * scaling * 2
+      height: parent.height - Style.marginM * scaling * 2
       spacing: Style.marginS * scaling
 
       // CPU Usage Component
       Item {
         Layout.preferredWidth: cpuUsageRow.implicitWidth
         Layout.preferredHeight: Math.round(Style.capsuleHeight * scaling)
-        Layout.alignment: Qt.AlignVCenter
+        Layout.alignment: Qt.AlignHCenter
         visible: showCpuUsage
 
-        RowLayout {
+        ColumnLayout {
           id: cpuUsageRow
           anchors.centerIn: parent
           spacing: Style.marginXS * scaling
@@ -67,7 +67,7 @@ RowLayout {
           NIcon {
             icon: "cpu-usage"
             font.pointSize: Style.fontSizeM * scaling
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
           }
 
           NText {
@@ -75,8 +75,8 @@ RowLayout {
             font.family: Settings.data.ui.fontFixed
             font.pointSize: Style.fontSizeXS * scaling
             font.weight: Style.fontWeightMedium
-            Layout.alignment: Qt.AlignVCenter
-            verticalAlignment: Text.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
             color: Color.mPrimary
           }
         }
@@ -86,10 +86,10 @@ RowLayout {
       Item {
         Layout.preferredWidth: cpuTempRow.implicitWidth
         Layout.preferredHeight: Math.round(Style.capsuleHeight * scaling)
-        Layout.alignment: Qt.AlignVCenter
+        Layout.alignment: Qt.AlignHCenter
         visible: showCpuTemp
 
-        RowLayout {
+        ColumnLayout {
           id: cpuTempRow
           anchors.centerIn: parent
           spacing: Style.marginXS * scaling
@@ -98,7 +98,7 @@ RowLayout {
             icon: "cpu-temperature"
             // Fire is so tall, we need to make it smaller
             font.pointSize: Style.fontSizeS * scaling
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
           }
 
           NText {
@@ -106,8 +106,8 @@ RowLayout {
             font.family: Settings.data.ui.fontFixed
             font.pointSize: Style.fontSizeXS * scaling
             font.weight: Style.fontWeightMedium
-            Layout.alignment: Qt.AlignVCenter
-            verticalAlignment: Text.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
             color: Color.mPrimary
           }
         }
@@ -117,10 +117,10 @@ RowLayout {
       Item {
         Layout.preferredWidth: memoryUsageRow.implicitWidth
         Layout.preferredHeight: Math.round(Style.capsuleHeight * scaling)
-        Layout.alignment: Qt.AlignVCenter
+        Layout.alignment: Qt.AlignHCenter
         visible: showMemoryUsage
 
-        RowLayout {
+        ColumnLayout {
           id: memoryUsageRow
           anchors.centerIn: parent
           spacing: Style.marginXS * scaling
@@ -128,7 +128,7 @@ RowLayout {
           NIcon {
             icon: "memory"
             font.pointSize: Style.fontSizeM * scaling
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
           }
 
           NText {
@@ -136,8 +136,8 @@ RowLayout {
             font.family: Settings.data.ui.fontFixed
             font.pointSize: Style.fontSizeXS * scaling
             font.weight: Style.fontWeightMedium
-            Layout.alignment: Qt.AlignVCenter
-            verticalAlignment: Text.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
             color: Color.mPrimary
           }
         }
@@ -147,7 +147,7 @@ RowLayout {
       Item {
         Layout.preferredWidth: networkDownloadRow.implicitWidth
         Layout.preferredHeight: Math.round(Style.capsuleHeight * scaling)
-        Layout.alignment: Qt.AlignVCenter
+        Layout.alignment: Qt.AlignHCenter
         visible: showNetworkStats
 
         RowLayout {
@@ -158,7 +158,7 @@ RowLayout {
           NIcon {
             icon: "download-speed"
             font.pointSize: Style.fontSizeM * scaling
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
           }
 
           NText {
@@ -166,8 +166,8 @@ RowLayout {
             font.family: Settings.data.ui.fontFixed
             font.pointSize: Style.fontSizeXS * scaling
             font.weight: Style.fontWeightMedium
-            Layout.alignment: Qt.AlignVCenter
-            verticalAlignment: Text.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
             color: Color.mPrimary
           }
         }
@@ -177,7 +177,7 @@ RowLayout {
       Item {
         Layout.preferredWidth: networkUploadRow.implicitWidth
         Layout.preferredHeight: Math.round(Style.capsuleHeight * scaling)
-        Layout.alignment: Qt.AlignVCenter
+        Layout.alignment: Qt.AlignHCenter
         visible: showNetworkStats
 
         RowLayout {
@@ -188,7 +188,7 @@ RowLayout {
           NIcon {
             icon: "upload-speed"
             font.pointSize: Style.fontSizeM * scaling
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
           }
 
           NText {
@@ -196,8 +196,8 @@ RowLayout {
             font.family: Settings.data.ui.fontFixed
             font.pointSize: Style.fontSizeXS * scaling
             font.weight: Style.fontWeightMedium
-            Layout.alignment: Qt.AlignVCenter
-            verticalAlignment: Text.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
             color: Color.mPrimary
           }
         }
@@ -207,7 +207,7 @@ RowLayout {
       Item {
         Layout.preferredWidth: diskUsageRow.implicitWidth
         Layout.preferredHeight: Math.round(Style.capsuleHeight * scaling)
-        Layout.alignment: Qt.AlignVCenter
+        Layout.alignment: Qt.AlignHCenter
         visible: showDiskUsage
 
         RowLayout {
@@ -218,7 +218,7 @@ RowLayout {
           NIcon {
             icon: "storage"
             font.pointSize: Style.fontSizeM * scaling
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
           }
 
           NText {
@@ -226,8 +226,8 @@ RowLayout {
             font.family: Settings.data.ui.fontFixed
             font.pointSize: Style.fontSizeXS * scaling
             font.weight: Style.fontWeightMedium
-            Layout.alignment: Qt.AlignVCenter
-            verticalAlignment: Text.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
             color: Color.mPrimary
           }
         }
